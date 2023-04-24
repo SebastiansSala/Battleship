@@ -1,0 +1,1 @@
+(()=>{"use strict";!function(){for(var e=document.getElementById("grid"),t=0;t<8;t++)for(var d=0;d<8;d++){var a=document.createElement("div");a.classList.add("bg-white"),a.classList.add("hover:bg-black"),e.appendChild(a)}}()})();

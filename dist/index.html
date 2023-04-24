@@ -8,10 +8,15 @@
     <script defer src="main.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="max-w-[2000px] mx-auto">
-    <div class="container mx-auto flex flex-col items-center justify-center bg-slate-500">
-        <div class="m-8 h-14 w-9/12 bg-black"></div>
-        <div id="grid" class="grid grid-cols-8 grid-rows-8 m-1 w-1/2 h-96 bg-black"></div>
+<body class="max-w-[2000px] mx-auto bg-slate-50">
+    <div class="container mx-auto h-screen items-center justify-centerpt-10">
+        <div class="h-14 w-full mx-automb-10">
+            <h1 class="text-center text-5xl">BATTLESHIP</h1>
+        </div>
+        <div class="flex flex-wrap items-center justify-evenly w-full h-1/2 ">
+            <div id="grid" class="grid grid-cols-10 grid-rows-10 m-1 w-96 h-96 bg-black"></div>
+            <div id="grid2" class="grid grid-cols-10 grid-rows-10 m-1 w-96 h-96 bg-black"></div>
+        </div>
     </div>
 </body>
 </html>

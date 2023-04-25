@@ -29,21 +29,28 @@ class Gameboard {
       
       for(let i = 0; i < shipPushed.length; i++){
           for(let j = 0; j < this.ships.length; j++){
-              if (this.ships[j].some((cell) => cell[0] === shipPushed[i][0] && cell[1] === shipPushed[i][1])) {
+              if (this.ships[j].positions.some(cell => cell[0] === shipPushed[i][0] && cell[1] === shipPushed[i][1])) {
               return;
               }
           }
       }
-      this.ships.push(shipPushed);
+      this.ships.push({positions: shipPushed, ship: ship});
       return true;
   }
   
   receiveAttack(x, y){
+      let shipIndex = null;
       for(let i = 0; i < this.ships.length; i++){
-          if(this.ships[i].some((cell) => cell[0] === x && cell[1] === y)){
-              return true;
+          if(this.ships[i].positions.some(cell => cell[0] === x && cell[1] === y)){
+              shipIndex = this.ships[i]
           }
       }
-      return false;
+      if(shipIndex){
+          shipIndex.ship.hitRegister();
+          this.board[x][y] = true;
+          return;
+      }
+      this.board[x][y] = false;
+      return;
   }
 }

@@ -7,8 +7,8 @@ export function loadBoard(){
         for(let col = 0; col < 10; col++){
             const cell = document.createElement('div');
             const cell2 = document.createElement('div');
-            cell.className = classnames('bg-white', 'hover:bg-black', 'border', 'border-black', 'aspect-w-1', 'aspect-h-1');
-            cell2.className = classnames('bg-white', 'hover:bg-black', 'border', 'border-black', 'aspect-w-1', 'aspect-h-1', 'cursor-pointer', 'square');
+            cell.className = classnames('bg-white', 'border', 'border-black', 'aspect-w-1', 'aspect-h-1');
+            cell2.className = classnames('bg-white', 'hover:bg-yellow-200', 'border', 'border-black', 'aspect-w-1', 'aspect-h-1', 'cursor-pointer', 'square');
             grid1.appendChild(cell);
             grid2.appendChild(cell2);
         }
@@ -16,7 +16,7 @@ export function loadBoard(){
 }
 
 
-export function loadShoot() {
+export function loadShot() {
     const cell = document.querySelectorAll('.square');
     cell.forEach(elem => {
       elem.addEventListener('click', () => {

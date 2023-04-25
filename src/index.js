@@ -1,5 +1,5 @@
 import { loadBoard } from "./dom";
-import { loadShoot } from "./dom";
+import { loadShot } from "./dom";
 
 loadBoard();
-loadShoot();
+loadShot();

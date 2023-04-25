@@ -1,6 +1,7 @@
 class Gameboard {
   constructor() {
     this.board = this.buildBoard();
+    this.shipsSunked();
     this.ships = [];
   }
 
@@ -39,10 +40,12 @@ class Gameboard {
   }
   
   receiveAttack(x, y){
+      if(this.board[x][y] !== null) return;
       let shipIndex = null;
       for(let i = 0; i < this.ships.length; i++){
           if(this.ships[i].positions.some(cell => cell[0] === x && cell[1] === y)){
               shipIndex = this.ships[i]
+              break;
           }
       }
       if(shipIndex){
@@ -52,5 +55,14 @@ class Gameboard {
       }
       this.board[x][y] = false;
       return;
+  }
+  
+  shipsSunked(){
+      for(let i in this.ships){
+          if(!this.ships[i].ship.sunk){
+              return false;
+          };
+      }
+      return true;
   }
 }

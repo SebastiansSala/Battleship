@@ -1,8 +1,8 @@
 class Gameboard {
   constructor() {
     this.board = this.buildBoard();
-    this.shipsSunked();
     this.ships = [];
+    this.shipsSunked();
   }
 
   buildBoard() {
@@ -57,12 +57,8 @@ class Gameboard {
       return;
   }
   
-  shipsSunked(){
-      for(let i in this.ships){
-          if(!this.ships[i].ship.sunk){
-              return false;
-          };
-      }
-      return true;
+  shipsSunked() {
+    return this.ships.every(ship => ship.ship.sunk);
   }
+
 }

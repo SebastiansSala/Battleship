@@ -23,7 +23,7 @@ export function generateShips() {
   return board;
 }
 
-function generateRandomPosition(ship) {
+function generateRandomPosition() {
   const row = Math.floor(Math.random() * 10);
   const col = Math.floor(Math.random() * 10);
   return [row, col];

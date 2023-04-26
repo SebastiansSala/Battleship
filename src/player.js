@@ -19,6 +19,6 @@ export const Player = (gameboard) => {
   };
 
   return {
-    randomAttack,
+    randomAttack, attacks,
   };
 };

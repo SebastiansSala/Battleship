@@ -59,6 +59,9 @@ export class Gameboard {
     }
     if (shipIndex) {
       shipIndex.ship.hitRegister();
+      if (shipIndex.ship.isSunk()) {
+        shipIndex.ship.sunk = true;
+      }
       this.board[x][y] = true;
       return;
     }

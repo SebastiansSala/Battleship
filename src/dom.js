@@ -3,8 +3,8 @@ import { generateShips } from "./generateShips";
 import { generateIAShips } from "./generateShips";
 
 let isPlayerTurn = true;
-const enemie = generateIAShips();
-const ally = generateShips();
+let enemie = generateIAShips();
+let ally = generateShips();
 
 export function loadBoard() {
   const grid1 = document.getElementById("grid");
@@ -16,7 +16,6 @@ export function loadBoard() {
       cell.className = classnames(
         "bg-white",
         "border",
-        "hover:bg-yellow-200",
         "border-black",
         "aspect-w-1",
         "aspect-h-1",
@@ -27,7 +26,6 @@ export function loadBoard() {
       cell.setAttribute("data-col", col);
       cell2.className = classnames(
         "bg-white",
-        "hover:bg-yellow-200",
         "border",
         "border-black",
         "aspect-w-1",
@@ -67,13 +65,30 @@ export function loadBoard() {
   }
 }
 
+function resetBoard(){
+  ally = generateShips();
+  enemie = generateIAShips();
+  const grid = document.getElementById('grid'); 
+  const grid2 = document.getElementById('grid2');
+  grid.innerHTML = "";
+  grid2.innerHTML = "";
+  isPlayerTurn = true;
+  const cells = document.querySelectorAll('.selected');
+  cells.forEach(cell => cell.classList.remove('selected'));
+  loadBoard();
+  loadShot();
+}
+
 export function loadShot() {
   const cell = document.querySelectorAll(".square");
   cell.forEach((elem) => {
     elem.addEventListener("click", () => {
       if(!isPlayerTurn) return;
       shoot(enemie, elem);
-      console.log(enemie.shipsSunked());
+      if(enemie.shipsSunked()){ 
+        window.alert('Ha ganado el JUGADOR');
+        resetBoard();
+      }
     });
   });
   const cell2 = document.querySelectorAll(".square2");
@@ -81,7 +96,10 @@ export function loadShot() {
     elem.addEventListener("click", () => {
       if(isPlayerTurn) return;
       shoot(ally, elem);
-      console.log(ally.shipsSunked());
+      if(ally.shipsSunked()) {
+        window.alert('Ha ganado la IA');
+        resetBoard();
+      }
     });
   });
 }
@@ -94,5 +112,5 @@ function shoot(player, cell) {
   cell.classList.add("selected");
   cell.removeEventListener("click", shoot);
   isPlayerTurn = !isPlayerTurn;
-  if(player.shipsSunked()) console.log(`Ha ganado ${player}`);
 }
+

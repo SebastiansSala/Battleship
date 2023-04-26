@@ -43,10 +43,22 @@ export function generateIAShips() {
     let positionFound = false;
 
     while (!positionFound) {
-      const [row, col] = generateRandomPosition(ship);
+      const [row, col] = generateRandomPosition();
       const direction = Boolean(Math.round(Math.random()));
       positionFound = board.addShip(ship, row, col, direction);
     }
   }
   return board;
 }
+
+export function generateIAMoves(ally){
+  const shootFound = [];
+  let row = null, col = null;
+  while(shootFound.some(elem => (row !== null && elem[0] !== row) && (col !== null && elem[1] !== col))){
+    [row, col] = generateRandomPosition();
+    shootFound.push([row, col]); 
+  }
+  ally.receiveAttack(row, col);
+  return [row, col];
+}
+

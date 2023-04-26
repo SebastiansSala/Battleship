@@ -1,6 +1,7 @@
 import classnames from "classnames";
 import { generateShips } from "./generateShips";
 import { generateIAShips } from "./generateShips";
+import { generateIAMoves } from "./generateShips";
 
 let isPlayerTurn = true;
 let enemie = generateIAShips();
@@ -89,14 +90,8 @@ export function loadShot() {
         window.alert('Ha ganado el JUGADOR');
         resetBoard();
       }
-    });
-  });
-  const cell2 = document.querySelectorAll(".square2");
-  cell2.forEach((elem) => {
-    elem.addEventListener("click", () => {
-      if(isPlayerTurn) return;
-      shoot(ally, elem);
-      if(ally.shipsSunked()) {
+      renderIAShoot(ally);
+      if(ally.shipsSunked()){
         window.alert('Ha ganado la IA');
         resetBoard();
       }
@@ -111,6 +106,11 @@ function shoot(player, cell) {
   player.receiveAttack(row, col);
   cell.classList.add("selected");
   cell.removeEventListener("click", shoot);
+  isPlayerTurn = !isPlayerTurn;
+}
+
+function renderIAShoot(player){
+  generateIAMoves(player);
   isPlayerTurn = !isPlayerTurn;
 }
 

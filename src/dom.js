@@ -2,6 +2,11 @@ import classnames from "classnames";
 import { generateShips } from "./generateShips";
 import { generateIAShips } from "./generateShips";
 
+
+
+let isPlayerTurn = true;
+const enemie = generateIAShips();
+
 export function loadBoard() {
   const grid1 = document.getElementById("grid");
   const grid2 = document.getElementById("grid2");
@@ -38,24 +43,9 @@ export function loadBoard() {
   const ally = generateShips();
   for (let ship of ally.ships) {
     for (let position of ship.positions) {
-      console.log(position)
       const row = position[0];
       const col = position[1];
       const cell = grid1.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-      console.log(cell)
-      cell.classList.remove("bg-white");
-      cell.classList.add('bg-black')
-    }
-  }
-
-  const enemie = generateIAShips();
-  for (let ship of enemie.ships) {
-    for (let position of ship.positions) {
-      console.log(position)
-      const row = position[0];
-      const col = position[1];
-      const cell = grid2.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-      console.log(cell)
       cell.classList.remove("bg-white");
       cell.classList.add('bg-black')
     }
@@ -65,9 +55,17 @@ export function loadBoard() {
 export function loadShot() {
   const cell = document.querySelectorAll(".square");
   cell.forEach((elem) => {
-    elem.addEventListener("click", () => {
+    elem.addEventListener("click", (event) => {
+      if(!isPlayerTurn) return;
+      if(elem.classList.contains('selected')) return;
+      const row = parseInt(elem.getAttribute("data-row"));
+      const col = parseInt(elem.getAttribute("data-col"));
+      enemie.receiveAttack(row, col);
+      console.log(enemie.ships)
       elem.classList.remove("bg-white");
-      elem.classList.add("tachita");
+      elem.disabled = true
+      isPlayerTurn = false;
+      elem.classList.add("selected");
     });
   });
 }

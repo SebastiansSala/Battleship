@@ -22,10 +22,10 @@ export class Gameboard {
 
     for (let i = 0; i < ship.length; i++) {
       if (direction) {
-        if (y + i >= 10) return; // Si la posición sobrepasa el límite del tablero, retorna
+        if (y + i >= 10) return;
         shipPushed.push([x, y + i]);
       } else {
-        if (x + i >= 10) return; // Si la posición sobrepasa el límite del tablero, retorna
+        if (x + i >= 10) return; 
         shipPushed.push([x + i, y]);
       }
     }

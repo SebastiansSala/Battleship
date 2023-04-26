@@ -1,4 +1,3 @@
-import { loadBoard } from "./dom.js";
-import { loadShot } from "./dom.js";
-loadBoard();
-loadShot();
+import renderPage from "./dom";
+renderPage.loadBoard();
+renderPage.loadShot();

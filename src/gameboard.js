@@ -6,14 +6,7 @@ export class Gameboard {
   }
 
   buildBoard() {
-    const board = [];
-    for (let row = 0; row < 10; row++) {
-      board[row] = [];
-      for (let col = 0; col < 10; col++) {
-        board[row][col] = null;
-      }
-    }
-    return board;
+    return Array.from({ length: 10 }, () => Array(10).fill(null));
   }
 
   addShip(ship, x, y, direction) {

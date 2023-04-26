@@ -1,5 +1,4 @@
-import { loadBoard } from "./dom";
-import { loadShot } from "./dom";
-
+import { loadBoard } from "./dom.js";
+import { loadShot } from "./dom.js";
 loadBoard();
 loadShot();

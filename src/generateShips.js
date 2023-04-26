@@ -20,10 +20,7 @@ export function generateShips() {
       positionFound = board.addShip(ship, row, col, direction);
     }
   }
-
-  for (let i in board.ships) {
-    console.log(board.ships[i].positions);
-  }
+  return board;
 }
 
 function generateRandomPosition(ship) {
@@ -32,7 +29,7 @@ function generateRandomPosition(ship) {
   return [row, col];
 }
 
-function generateIaShips() {
+export function generateIAShips() {
   const board = new Gameboard();
   const ships = [
     new Ship(2),
@@ -51,8 +48,5 @@ function generateIaShips() {
       positionFound = board.addShip(ship, row, col, direction);
     }
   }
-
-  for (let i in board.ships) {
-    console.log(board.ships[i].positions);
-  }
+  return board;
 }

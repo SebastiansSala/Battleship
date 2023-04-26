@@ -11,14 +11,14 @@ export class Gameboard {
 
   addShip(ship, x, y, direction) {
     const shipPushed = [];
-    if (!(x >= 0 && x < 10 && y >= 0 && y < 10)) return;
+    if (!(x >= 0 && x < 10 && y >= 0 && y < 10)) return false;
 
     for (let i = 0; i < ship.length; i++) {
       if (direction) {
-        if (y + i >= 10) return;
+        if (y + i >= 10) return false;
         shipPushed.push([x, y + i]);
       } else {
-        if (x + i >= 10) return; 
+        if (x + i >= 10) return false;
         shipPushed.push([x + i, y]);
       }
     }
@@ -31,7 +31,7 @@ export class Gameboard {
               cell[0] === shipPushed[i][0] && cell[1] === shipPushed[i][1]
           )
         ) {
-          return;
+          return false;
         }
       }
     }

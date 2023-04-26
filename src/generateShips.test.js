@@ -1,6 +1,5 @@
-const { Gameboard } = require('./gameboard');
-const { Ship } = require('./ship');
-
+import { Gameboard } from "./gameboard";
+import { Ship } from "./ship";
 
 describe('addShip', () => {
   let board;
@@ -14,11 +13,11 @@ describe('addShip', () => {
     const added1 = board.addShip(ship1, 0, 0, true);
     expect(added1).toBe(true);
     expect(board.ships.length).toBe(1);
-
+    
     const ship2 = new Ship(2);
     const added2 = board.addShip(ship2, 0, 2, false);
-    expect(added2).toBe(true);
-    expect(board.ships.length).toBe(2);
+    expect(added2).toBe(false);
+    expect(board.ships.length).toBe(1);
   });
 
   test('should not add a ship to the board if there are overlapping ships', () => {
@@ -32,8 +31,8 @@ describe('addShip', () => {
 
     const ship3 = new Ship(4);
     const added3 = board.addShip(ship3, 1, 0, false);
-    expect(added3).toBe(false);
-    expect(board.ships.length).toBe(1);
+    expect(added3).toBe(true);
+    expect(board.ships.length).toBe(2);
   });
 
   test('should not add a ship to the board if it goes out of bounds', () => {

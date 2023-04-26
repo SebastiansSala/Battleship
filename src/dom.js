@@ -7,7 +7,6 @@ let enemie = generateShips();
 let ally = generateShips();
 let IAPlayer = new Player(ally);
 
-
 const renderPage = (() => {
   function loadBoard() {
     const grid1 = document.getElementById("grid");
@@ -34,7 +33,8 @@ const renderPage = (() => {
           "aspect-w-1",
           "aspect-h-1",
           "cursor-pointer",
-          "square"
+          "square",
+          "hover:bg-yellow-100"
         );
         cell2.setAttribute("data-row", row);
         cell2.setAttribute("data-col", col);
@@ -42,7 +42,7 @@ const renderPage = (() => {
         grid2.appendChild(cell2);
       }
     }
-  
+
     for (let ship of enemie.ships) {
       for (let position of ship.positions) {
         const row = position[0];
@@ -54,7 +54,7 @@ const renderPage = (() => {
         cell.classList.add("bg-red-700");
       }
     }
-  
+
     for (let ship of ally.ships) {
       for (let position of ship.positions) {
         const row = position[0];
@@ -67,17 +67,17 @@ const renderPage = (() => {
       }
     }
   }
-  
+
   function loadShot() {
     const cell = document.querySelectorAll(".square");
     cell.forEach((elem) => {
       elem.addEventListener("click", onCellClick);
     });
   }
-  
+
   function onCellClick() {
     const cell = event.target;
-    if (!isPlayerTurn || cell.classList.contains("selected")) return;
+    if (!isPlayerTurn || cell.classList.contains("selected") || cell.classList.contains("missedShot")) return;
     shoot(enemie, cell);
     if (enemie.shipsSunked()) {
       window.alert("Ha ganado el JUGADOR");
@@ -92,28 +92,41 @@ const renderPage = (() => {
         return;
       }
     }, 100);
-    cell.classList.add("selected");
-    cell.removeEventListener("click", onCellClick);
-    isPlayerTurn = !isPlayerTurn;
   }
-  
+
   function shoot(player, cell) {
     const row = parseInt(cell.getAttribute("data-row"));
     const col = parseInt(cell.getAttribute("data-col"));
+    const isHit = player.ships.some((ship) =>
+      ship.positions.some(
+        (position) => position[0] === row && position[1] === col
+      )
+    );
+    if (isHit) {
+      cell.classList.add("selected");
+    } else {
+      cell.classList.add("missedShot");
+    }
     player.receiveAttack(row, col);
+    isPlayerTurn = !isPlayerTurn;
   }
-  
+
   function renderIAShoot(player) {
-    const [row, col] = player.randomAttack();
+    const [row, col, isHit] = player.randomAttack();
     const cell = grid.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-    cell.classList.add("selected");
+    console.log(player);
+    if (isHit) {
+      cell.classList.add("selected");
+    } else {
+      cell.classList.add("missedShot");
+    }
     cell.removeEventListener("click", onCellClick);
     isPlayerTurn = !isPlayerTurn;
   }
 
   function resetBoard() {
     ally = generateShips();
-    enemie = generateIAShips();
+    enemie = generateShips();
     IAPlayer = new Player(enemie);
     const grid = document.getElementById("grid");
     const grid2 = document.getElementById("grid2");
@@ -122,11 +135,13 @@ const renderPage = (() => {
     isPlayerTurn = true;
     const cells = document.querySelectorAll(".selected");
     cells.forEach((cell) => cell.classList.remove("selected"));
+    const missedShotCells = document.querySelectorAll(".missedShot");
+    missedShotCells.forEach((cell) => cell.classList.remove("missedShot"));
     loadBoard();
     loadShot();
   }
 
-  return {loadBoard, loadShot};
+  return { loadBoard, loadShot };
 })();
 
-export default renderPage
+export default renderPage;
